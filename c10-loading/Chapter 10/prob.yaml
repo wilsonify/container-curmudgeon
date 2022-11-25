@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: prob-busybox
+
+spec:
+  selector:
+    matchLabels:
+      run: prob-busybox
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: prob-busybox
+    spec:
+      containers:
+      - name: prob-busybox
+        image: busybox
+        args:
+        - /bin/sh
+        - -c
+        - touch /tmp/prob-check; sleep 30; rm -rf /tmp/prob-check; sleep 600
+        resources:
+          requests: 
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        readinessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/prob-check
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        livenessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/prob-check
+          initialDelaySeconds: 7
+          periodSeconds: 5

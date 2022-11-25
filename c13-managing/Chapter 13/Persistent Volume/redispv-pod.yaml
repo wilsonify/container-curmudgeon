@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+
+metadata:
+  name: redispv-pod
+  
+spec:
+  containers:
+    - name: redispv-container
+      image: redis
+      volumeMounts:
+      - mountPath: "/data"
+        name: my-pd
+  volumes:
+    - name: my-pd
+      persistentVolumeClaim:
+        claimName: pv-claim

@@ -1,0 +1,3 @@
+FROM mum-ubuntu:latest
+
+CMD ["bash"]

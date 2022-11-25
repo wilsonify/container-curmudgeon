@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  os:
+    image: busybox
+    container_name: busybox-os
+    cap_add:
+      - ALL
+    command: echo 'WELCOME TO BUSYBOX, THE SWISS ARMY KNIFE OF EMBEDDED LINUX.'
+    devices:
+        - "/dev/sda:/dev/sda"
+    environment:
+      LOGNAME: cerulean_canvas
+      HOME: /cerulean_canvas
+    init: true
+    labels: 
+      Creator: "Cerulean Canvas"
+    logging: 
+      driver: "journald"
+    pid: host     
+    restart: on-failure
+    stop_signal: SIGUSR1
+    volumes:
+      - busybox_data:/etc
+  
+volumes:
+  busybox_data:

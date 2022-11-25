@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: toleration-busybox
+  
+spec:
+  selector:
+    matchLabels:
+      run: toleration-busybox
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        run: toleration-busybox
+    spec:
+      containers:
+      - name: toleration-busybox
+        image: busybox
+        command: ['sh', '-c', 'echo Hey, there!!! && sleep 120']
+      tolerations:
+      - key: "type"
+        operator: "Equal"
+        value: "test"
+        effect: "NoSchedule"

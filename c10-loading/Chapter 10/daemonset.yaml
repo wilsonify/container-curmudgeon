@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: DaemonSet
+
+metadata:
+  name: test-daemonset-1
+  labels:
+    app: test-daemon-1
+
+spec:
+  selector:
+    matchLabels:
+      app: test-daemon-1
+  template:
+    metadata:
+      labels:
+        app: test-daemon-1
+    spec:
+      containers:
+      - name: busybox
+        image: busybox
+        args:
+        - sleep
+        - "10000"
